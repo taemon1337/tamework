@@ -1,0 +1,53 @@
+version: '3'
+services:
+  proxy:
+    build: ./proxy
+    command: nodemon app.js
+    volumes:
+      - ./proxy:/app
+    working_dir: /app
+    ports:
+      - 8080:8080
+    environment:
+      - LOGIN_URL=/ui/#/sign-in
+      - AUTH_SERVER=http://authserver:8080
+      - USER_INTERFACE_PREFIX=/ui
+      - USER_INTERFACE_SERVER=http://userinterface:8080
+  authserver:
+    build: ./auth-server
+    command: nodemon app.js
+    volumes:
+      - ./auth-server:/app
+      - ./common:/common
+    working_dir: /app
+    environment:
+      - PORT=8080
+      - DB_HOST=cockroachdb
+      - DB_NAME=tamedb
+      - DB_USER=tamer
+      - GOOGLE_CLIENT_ID=$GOOGLE_CLIENT_ID
+      - GOOGLE_CLIENT_SECRET=$GOOGLE_CLIENT_SECRET
+      - APP_REDIRECT_URL=http://localhost:8080/
+    depends_on:
+      - cockroachdb
+  userinterface:
+    build: ./user-interface
+    command: npm run dev
+    volumes:
+      - ./user-interface:/app
+    working_dir: /app
+    environment:
+      - PORT=8080
+    ports:
+      - 8000:8080
+    depends_on:
+      - authserver
+      - proxy
+  cockroachdb:
+    image: cockroachdb/cockroach:v1.1.5
+    command: start --insecure
+    volumes:
+      - ./data/cockroachdb:/cockroach/cockroach-data
+    ports:
+      - 8001:8080
+

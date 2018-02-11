@@ -1,0 +1,17 @@
+{
+  "name": "auth-can-proxy",
+  "version": "1.0.0",
+  "description": "Node proxy with authentication and authorization.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.17.1",
+    "express": "^4.16.2",
+    "http-proxy-middleware": "^0.17.4",
+    "jsonwebtoken": "^8.1.1"
+  }
+}

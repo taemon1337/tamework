@@ -1,0 +1,23 @@
+{
+  "name": "auth-login-server",
+  "version": "1.0.0",
+  "description": "Login microservice",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.2",
+    "http-proxy-middleware": "^0.17.4",
+    "jsonwebtoken": "^8.1.1",
+    "nodemon": "^1.14.12",
+    "passport": "^0.4.0",
+    "passport-google-oauth": "^1.0.0",
+    "passport-jwt": "^3.0.1",
+    "passport-oauth2": "^1.4.0",
+    "sequelize": "^4.33.1",
+    "sequelize-cockroachdb": "^1.0.2"
+  }
+}

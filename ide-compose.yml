@@ -1,0 +1,10 @@
+version: "2"
+services:
+  ide:
+    image: sapk/cloud9 
+    volumes:
+      - ./:/workspace
+    ports:
+      - 8181:8181
+    command: "--auth tim:tim"
+
