@@ -13,6 +13,9 @@ services:
       - AUTH_SERVER=http://authserver:8080
       - USER_INTERFACE_PREFIX=/ui
       - USER_INTERFACE_SERVER=http://userinterface:8080
+    depends_on:
+      - cockroachdb
+      - initdb
   authserver:
     build: ./auth-server
     command: nodemon app.js
@@ -22,14 +25,16 @@ services:
     working_dir: /app
     environment:
       - PORT=8080
-      - DB_HOST=cockroachdb
-      - DB_NAME=tamedb
-      - DB_USER=tamer
+      - COCKROACH_HOST=cockroachdb
+      - COCKROACH_PORT=26257
+      - COCKROACH_USER=tamer
+      - COCKROACH_DATABASE=tamedb
       - GOOGLE_CLIENT_ID=$GOOGLE_CLIENT_ID
       - GOOGLE_CLIENT_SECRET=$GOOGLE_CLIENT_SECRET
       - APP_REDIRECT_URL=http://localhost:8080/
     depends_on:
       - cockroachdb
+      - initdb
   userinterface:
     build: ./user-interface
     command: npm run dev
@@ -50,4 +55,14 @@ services:
       - ./data/cockroachdb:/cockroach/cockroach-data
     ports:
       - 8001:8080
+  initdb:
+    image: cockroachdb/cockroach:v1.1.5
+    command: sql --insecure -e 'CREATE DATABASE tamedb; GRANT ALL ON DATABASE tamedb TO tamer'
+    environment:
+      - COCKROACH_HOST=cockroachdb
+      - COCKROACH_PORT=26257
+      - COCKROACH_USER=root
+      - COCKROACH_DATABASE=tamedb
+    depends_on:
+      - cockroachdb
 

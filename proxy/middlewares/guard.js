@@ -25,7 +25,7 @@ router.use('*', proxy({
         return res.status(401).send("Unauthorized")
       }
     }
-    console.log('[GUARD] Allow: ', proxyReq.originalUrl)
+    console.log('[GUARD] Allow: ', req.originalUrl)
   }
 }))
 

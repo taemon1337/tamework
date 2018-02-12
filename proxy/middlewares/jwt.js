@@ -14,8 +14,8 @@ let decode = function (token) {
 let parseToken = function (req) {
   if (req.headers && req.headers.authorization) {
     return req.headers.authorization
-  } else if (req.params && req.params.token) {
-    return req.params.token
+  } else if (req.query && req.query.token) {
+    return req.query.token
   } else {
     return ''
   }
