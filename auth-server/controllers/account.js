@@ -30,9 +30,18 @@ passport.use(new JwtStrategy(jwtOptions, function (jwt_payload, next) {
   })
 }))
 
-router.get('/profile', passport.authenticate('jwt', { session: false }),
+router.get('/profile', function (req, res, next) {
+  if (req.user && req.user.payload) {
+    res.send(req.user.payload)
+  } else {
+    res.status(500).send("No user profile information available.")
+  }
+})
+
+router.get('/profile2', passport.authenticate('jwt', { session: false }),
   function (req, res) {
-    res.send(req.user.profile)
+    console.log('[PROFILE] ', req.user)
+    res.send(req.user)
   }
 )
 

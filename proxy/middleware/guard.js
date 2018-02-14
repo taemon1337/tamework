@@ -12,7 +12,6 @@ router.use('*', proxy({
   target: 'http://localhost',
   ws: true,
   router: function (req) {
-    console.log('[ROUTER]: ', req.target)
     return req.target
   },
   onProxyReq: function (proxyReq, req, res) {

@@ -6,7 +6,7 @@ var parseData = function (resp) {
 
 var accountApi = {
   profile: function (token) {
-    return http.get('/account/profile', { params: { token: token } }).then(parseData)
+    return http.get('/account/profile', { headers: { 'Authorization': 'Bearer ' + token } }).then(parseData)
   },
   save: function (record, opts) {
     return http(Object.assign({}, opts, { method: 'PUT', url: '/account', data: record })).then(parseData)

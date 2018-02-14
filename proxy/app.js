@@ -11,10 +11,10 @@ let express = require('express')
   , tls_ca_file = process.env.TLS_CA_FILE || '/etc/ssl/ca.pem'
   , port = (process.env.PORT ? process.env.PORT : process.env.HTTPS ? 8443 : 8080)
   , server = null
-  , NoAuthHandler = require('./middlewares/noauth')
-  , JwtHandler = require('./middlewares/jwt')
-  , CanCanHandler = require('./middlewares/cancan')
-  , GuardHandler = require('./middlewares/guard')
+  , NoAuthHandler = require('./middleware/noauth')
+  , JwtHandler = require('/common/middleware/jwt')
+  , CanCanHandler = require('./middleware/cancan')
+  , GuardHandler = require('./middleware/guard')
 
 
 app.use(bodyParser.json({ limit: '50mb', type: 'application/json' }))

@@ -31,11 +31,14 @@ module.exports = function (req, res, next) {
     if (parts.length === 2 && parts[0] === 'Bearer') {
       req.user = decode(parts[1])
       if (req.user) {
+        console.log('[JWT] User information: ', req.user.payload)
         next()
       } else {
+        console.log('[JWT] Unable to parse Authorization Token.')
         res.status(401).send('Unable to parse Authorization Token.')
       }
     } else {
+      console.log('[JWT] Invalid Authorization Token format: Expected "Bearer <token>"')
       res.status(401).send('Invalid Authorization Token format: Expected "Bearer <token>"')
     }
   } else {

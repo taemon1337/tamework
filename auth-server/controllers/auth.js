@@ -8,7 +8,7 @@ let express = require('express')
   , GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID
   , GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET
   , GOOGLE_CLIENT_SCOPE = process.env.GOOGLE_CLIENT_SCOPE ? process.env.GOOGLE_CLIENT_SCOPE.split(' ') : ['profile email']
-  , APP_REDIRECT_URL = process.env.APP_REDIRECT_URL || '/'
+  , APP_REDIRECT_URL = process.env.APP_REDIRECT_URL || '/ui'
 
 passport.use(new GoogleStrategy({ clientID: GOOGLE_CLIENT_ID, clientSecret: GOOGLE_CLIENT_SECRET, callbackURL: '/api/auth/google/callback' }, function (accessToken, refreshToken, profile, done) {
   var attrs = {
@@ -62,8 +62,8 @@ passport.deserializeUser(function(email, done) {
 router.get('/google', passport.authenticate('google', { scope: GOOGLE_CLIENT_SCOPE }))
 
 router.get('/google/callback', passport.authenticate('google', { failureRedirect: '/' }), function (req, res) {
-  console.log('[GOOGLE-CB] Redirect to ', APP_REDIRECT_URL)
-  res.redirect(APP_REDIRECT_URL + '#/set-token/' + req.user.sessionSecret)
+  console.log('[GOOGLE-CB] Redirect to ', APP_REDIRECT_URL, req.user)
+  res.redirect(APP_REDIRECT_URL + '#/set-token/' + req.user.jwtToken)
 })
 
 module.exports = router

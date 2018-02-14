@@ -5,5 +5,6 @@ router.use('*', function (req, res, next) { console.log('[ACCOUNT] ' + req.origi
 router.use('/health', require('./health'))
 router.use('/account', require('./account'))
 router.use('/auth', require('./auth'))
+router.use('/jwt', require('./jwt'))
 
 module.exports = router

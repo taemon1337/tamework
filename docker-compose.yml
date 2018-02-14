@@ -5,10 +5,12 @@ services:
     command: nodemon app.js
     volumes:
       - ./proxy:/app
+      - ./common:/common
     working_dir: /app
     ports:
       - 8080:8080
     environment:
+      - NODE_PATH=/app/node_modules
       - LOGIN_URL=/ui/#/sign-in
       - AUTH_SERVER=http://authserver:8080
       - USER_INTERFACE_PREFIX=/ui
@@ -31,7 +33,8 @@ services:
       - COCKROACH_DATABASE=tamedb
       - GOOGLE_CLIENT_ID=$GOOGLE_CLIENT_ID
       - GOOGLE_CLIENT_SECRET=$GOOGLE_CLIENT_SECRET
-      - APP_REDIRECT_URL=http://localhost:8080/
+      - APP_REDIRECT_URL=http://localhost:8080/ui
+      - NODE_PATH=/app/node_modules
     depends_on:
       - cockroachdb
       - initdb

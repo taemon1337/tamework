@@ -44,6 +44,7 @@ export default {
   methods: {
     signInWith (provider) {
       console.log('Sign in with ' + provider)
+      window.location = '/api/auth/' + provider
     }
   }
 }
