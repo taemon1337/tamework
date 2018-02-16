@@ -5,7 +5,6 @@ let express = require('express')
   , app = express()
   , passport = require('passport')
   , bodyParser = require('body-parser')
-  , JwtHandler = require('/common/middleware/jwt')
   , tls_on = process.env.TLS_ENABLE || false
   , tls_cert_file = process.env.TLS_CERT_FILE || '/etc/ssl/server.pem'
   , tls_key_file = process.env.TLS_KEY_FILE || '/etc/ssl/server.key'
@@ -16,8 +15,7 @@ let express = require('express')
 app.use(passport.initialize())
 app.use(bodyParser.json({ limit: '1mb', type: 'application/json' }))
 app.use(bodyParser.urlencoded({ extended: true, parameterLimit: 100, limit: '1mb' }))
-app.use(JwtHandler)
-app.use('/api', require('./controllers'))
+app.use('/api/auth/v1', require('./controllers'))
 
 if (tls_on) {
   let credentials = { cert: fs.readFileSync(tls_cert_file), key: fs.readFileSync(tls_key_file), ca: fs.readFileSync(tls_ca_file) }

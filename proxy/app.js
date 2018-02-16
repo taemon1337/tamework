@@ -12,7 +12,7 @@ let express = require('express')
   , port = (process.env.PORT ? process.env.PORT : process.env.HTTPS ? 8443 : 8080)
   , server = null
   , NoAuthHandler = require('./middleware/noauth')
-  , JwtHandler = require('/common/middleware/jwt')
+  , JwtCheckHandler = require('./middleware/jwtcheck')
   , CanCanHandler = require('./middleware/cancan')
   , GuardHandler = require('./middleware/guard')
 
@@ -27,7 +27,7 @@ app.use(bodyParser.urlencoded({ extended: true, parameterLimit: 1000, limit: '50
  * GuardHandler:  Makes final decision based upon req.can as provided by above middlewares
  */
 app.use('*', NoAuthHandler)
-app.use('*', JwtHandler)
+app.use('*', JwtCheckHandler)
 app.use('*', CanCanHandler)
 app.use('*', GuardHandler)
 
