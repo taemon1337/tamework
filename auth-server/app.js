@@ -12,6 +12,7 @@ let express = require('express')
   , port = (process.env.PORT ? process.env.PORT : process.env.HTTPS ? 8443 : 8080)
   , server = null
 
+app.use('*', function (req, res, next) { console.log('[AUTH] ' + req.originalUrl); next() })
 app.use(passport.initialize())
 app.use(bodyParser.json({ limit: '1mb', type: 'application/json' }))
 app.use(bodyParser.urlencoded({ extended: true, parameterLimit: 100, limit: '1mb' }))

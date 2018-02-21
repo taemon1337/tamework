@@ -9,7 +9,11 @@ let jwtOptions = {
 }
 
 let verify = function (token, cb) {
-  jwt.verify(token, JWT_SECRET_OR_KEY, jwtOptions, cb)
+  if (token) {
+    jwt.verify(token, JWT_SECRET_OR_KEY, jwtOptions, cb)
+  } else {
+    cb(true, null)
+  }
 }
 
 // GET /verify/:token - return verified decoded jwt payload
@@ -17,8 +21,8 @@ router.get('/:token', function (req, res, next) {
   console.log('[JWT] Verifying JWT token ', req.params.token)
   verify(req.params.token, function (err, decoded) {
     if (err) {
-      console.log('[ERROR] Error verifying jwt token: ', err)
-      res.status(500).send(err)
+      console.log('[ERROR] Error verifying jwt token: ', req.params.token)
+      res.send(false)
     } else {
       console.log('[JWT] Verified JWT token: ', decoded)
       res.send(decoded)

@@ -7,6 +7,8 @@ let express = require('express')
   , AUTH_API_PREFIX = process.env.AUTH_API_PREFIX || '/api/auth/v1'
 
 router.all('*', function (req, res, next) {
+
+  // ^/ui or ^/sockjs or ^/favicon
   if (req.originalUrl.startsWith(USER_INTERFACE_PREFIX) || req.originalUrl.startsWith('/sockjs') || req.originalUrl.startsWith('/favicon')) {
     req.target = USER_INTERFACE_SERVER
     req.can = "public"

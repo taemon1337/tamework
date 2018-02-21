@@ -21,20 +21,19 @@ const actions = {
     } else {
       token = window.sessionStorage.getItem(AccountTypes.sessionToken)
     }
-    Api.account.profile(token).then(function (profile) {
-      console.log('PROFILE: ', profile)
-      if (profile) {
-        commit(AccountTypes.currentUser, profile)
-      }
-    })
+    Api.account.profile(token)
+      .then(function (profile) {
+        console.log('PROFILE: ', profile)
+        if (profile) {
+          commit(AccountTypes.currentUser, profile)
+        }
+      })
+      .catch(function (err) {
+        console.log('[ERROR] Problem fetching user profile: ', err)
+      })
   },
   [AccountTypes.signInWith] ({ commit }, provider) {
-    Api.account.signInWith(provider).then(function (profile) {
-      console.log('PROFILE: ', profile)
-      if (profile) {
-        commit(AccountTypes.currentUser, profile)
-      }
-    })
+    Api.account.signInWith(provider)
   },
   [AccountTypes.signOut] ({ commit }) {
     window.sessionStorage.removeItem(AccountTypes.sessionToken)

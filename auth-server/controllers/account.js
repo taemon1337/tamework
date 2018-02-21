@@ -6,7 +6,8 @@ router.get('/profile', function (req, res, next) {
     console.log('[ACCOUNT] Getting user profile: ', req.user.displayName)
     res.send(req.user)
   } else {
-    res.status(500).send("No user profile information available.")
+    res.send(null)
+    // res.status(500).send("No user profile information available.")
   }
 })
 

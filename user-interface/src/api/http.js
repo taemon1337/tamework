@@ -1,12 +1,17 @@
 import axios from 'axios'
 import { AccountTypes } from '@/store/mutation-types'
 
-var api = axios.create({
+let axiosOpts = {
   baseURL: process.env.API || (window.location.origin + '/api'),
-  timeout: 5000,
-  headers: {
-    'Authorization': 'Bearer ' + window.sessionStorage.getItem(AccountTypes.sessionToken)
-  }
-})
+  timeout: 5000
+}
 
-export default api
+let token = window.sessionStorage.getItem(AccountTypes.sessionToken)
+
+if (token) {
+  axiosOpts.headers = {
+    'Authorization': 'Bearer ' + token
+  }
+}
+
+export default axios.create(axiosOpts)

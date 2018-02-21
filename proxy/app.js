@@ -15,6 +15,7 @@ let express = require('express')
   , JwtCheckHandler = require('./middleware/jwtcheck')
   , CanCanHandler = require('./middleware/cancan')
   , GuardHandler = require('./middleware/guard')
+  , ProxyHandler = require('./middleware/proxy')
 
 
 app.use(bodyParser.json({ limit: '50mb', type: 'application/json' }))
@@ -30,6 +31,7 @@ app.use('*', NoAuthHandler)
 app.use('*', JwtCheckHandler)
 app.use('*', CanCanHandler)
 app.use('*', GuardHandler)
+app.use('*', ProxyHandler)
 
 if (tls_on) {
   let credentials = { cert: fs.readFileSync(tls_cert_file), key: fs.readFileSync(tls_key_file), ca: fs.readFileSync(tls_ca_file) }

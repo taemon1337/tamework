@@ -7,7 +7,7 @@ import { AccountTypes } from '@/store/mutation-types'
 
 Vue.use(Router)
 
-export default new Router({
+let router = new Router({
   routes: [
     {
       path: '/',
@@ -20,6 +20,7 @@ export default new Router({
       component: SignInPage
     },
     {
+      name: 'set-token',
       path: '/set-token/:token',
       beforeEnter: function (to, from, next) {
         store.dispatch(AccountTypes.signIn, to.params.token)
@@ -28,3 +29,24 @@ export default new Router({
     }
   ]
 })
+
+router.beforeEach(function (to, from, next) {
+  let user = store.getters[AccountTypes.currentUser]
+  console.log('[GUARD] ', to, user)
+  if (to.name === 'signin' || to.name === 'set-token') {
+    if (user) {
+      next('/')
+    } else {
+      next()
+    }
+  } else {
+    if (user) {
+      next()
+    } else {
+      console.log('You must login.')
+      next('/sign-in')
+    }
+  }
+})
+
+export default router

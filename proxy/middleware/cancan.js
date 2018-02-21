@@ -26,7 +26,8 @@ module.exports = function (req, res, next) {
       req.can = !!resp.data.can
     })
     .catch(function (err) {
-      return res.status(500).send(err)
+      console.log('[ERROR] Failure querying authorization server: ', err)
+      req.can = false
     })
   } else {
     req.can = false
