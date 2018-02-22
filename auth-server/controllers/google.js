@@ -2,7 +2,7 @@ let express = require('express')
   , router = express.Router()
   , passport = require('passport')
   , GoogleStrategy = require('passport-google-oauth').OAuth2Strategy
-  , roach = require('/common/orm/roach')
+  , Account = require('/common/orm/Account')
   , parser = require('/common/util/parser')
   , SESSION_SECRET = process.env.SESSION_SECRET || ''
   , GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID
@@ -20,12 +20,12 @@ passport.use(new GoogleStrategy({ clientID: GOOGLE_CLIENT_ID, clientSecret: GOOG
 //    oauthRefreshToken: refreshToken
   };
   console.log('[GOOGLE] Authenticated as ', attrs.displayName)
-  roach.account.findOne({ where: { email: attrs.email }}).then(function (account) {
+  Account.findOne({ where: { email: attrs.email }}).then(function (account) {
     if (account) {
       console.log('[ACCOUNT] Found user: ', account.get('displayName'))
       done(null, account)
     } else {
-      roach.account.create(attrs).then(function (account) {
+      Account.create(attrs).then(function (account) {
         if (account) {
           console.log('[ACCOUNT] Created user: ', account.get('displayName'))
           done(null, account)
@@ -51,7 +51,7 @@ passport.serializeUser(function(user, done) {
 })
 
 passport.deserializeUser(function(email, done) {
-  roach.account.findOne({ email: email }).then(function(user) {
+  Account.findOne({ email: email }).then(function(user) {
     done(null, user)
   }).catch(function (err) {
     console.log('[ERROR] Cannot find user by email: ' + email, err)

@@ -3,7 +3,7 @@ let express = require('express')
   , CAN_SCHEME = process.env.CAN_SCHEME || 'http://'
   , CAN_SERVER = process.env.CAN_SERVER || 'localhost'
   , CAN_PORT = process.env.CAN_PORT || '8080'
-  , CAN_PATH = process.env.CAN_PATH || '/can'
+  , CAN_PATH = process.env.CAN_PATH || '/api/can/v1'
   , CAN_TOKEN = process.env.CAN_TOKEN || null
   , LOGIN_URL = process.env.LOGIN_URL || '/ui/sign-in'
 

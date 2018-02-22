@@ -3,21 +3,16 @@ let express = require('express')
   , https = require('https')
   , fs = require('fs')
   , app = express()
-  , passport = require('passport')
-  , bodyParser = require('body-parser')
   , tls_on = process.env.TLS_ENABLE || false
   , tls_cert_file = process.env.TLS_CERT_FILE || '/etc/ssl/server.pem'
   , tls_key_file = process.env.TLS_KEY_FILE || '/etc/ssl/server.key'
   , tls_ca_file = process.env.TLS_CA_FILE || '/etc/ssl/ca.pem'
   , port = (process.env.PORT ? process.env.PORT : process.env.HTTPS ? 8443 : 8080)
   , server = null
+  , JwtCheckHandler = require('/common/middleware/jwtcheck')
 
-app.use('*', function (req, res, next) { console.log('[AUTH] ' + req.originalUrl); next() })
-app.use(passport.initialize())
-app.use(bodyParser.json({ limit: '1mb', type: 'application/json' }))
-app.use(bodyParser.urlencoded({ extended: true, parameterLimit: 100, limit: '1mb' }))
-app.use('/api/auth/v1', require('./controllers'))
-app.use('/api/can/v1', require('./controllers/can'))
+app.use('*', JwtCheckHandler)
+app.use('/api/registry/v1', require('./controllers'))
 
 if (tls_on) {
   let credentials = { cert: fs.readFileSync(tls_cert_file), key: fs.readFileSync(tls_key_file), ca: fs.readFileSync(tls_ca_file) }

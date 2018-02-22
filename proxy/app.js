@@ -4,7 +4,6 @@ let express = require('express')
   , fs = require('fs')
   , app = express()
   , proxy = require('http-proxy-middleware')
-  , bodyParser = require('body-parser')
   , tls_on = process.env.TLS_ENABLE || false
   , tls_cert_file = process.env.TLS_CERT_FILE || '/etc/ssl/server.pem'
   , tls_key_file = process.env.TLS_KEY_FILE || '/etc/ssl/server.key'
@@ -13,13 +12,9 @@ let express = require('express')
   , server = null
   , NoAuthHandler = require('./middleware/noauth')
   , JwtCheckHandler = require('./middleware/jwtcheck')
-  , CanCanHandler = require('./middleware/cancan')
+  , CanCheckHandler = require('./middleware/cancheck')
   , GuardHandler = require('./middleware/guard')
   , ProxyHandler = require('./middleware/proxy')
-
-
-app.use(bodyParser.json({ limit: '50mb', type: 'application/json' }))
-app.use(bodyParser.urlencoded({ extended: true, parameterLimit: 1000, limit: '50mb' })) // need app.use('*', mw) in order for params to be set
 
 /*
  * NoAuthHandler: Checks to see if path do not require authentication and if not, proxies it directly
@@ -29,7 +24,7 @@ app.use(bodyParser.urlencoded({ extended: true, parameterLimit: 1000, limit: '50
  */
 app.use('*', NoAuthHandler)
 app.use('*', JwtCheckHandler)
-app.use('*', CanCanHandler)
+app.use('*', CanCheckHandler)
 app.use('*', GuardHandler)
 app.use('*', ProxyHandler)
 

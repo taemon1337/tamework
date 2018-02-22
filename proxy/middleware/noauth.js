@@ -19,6 +19,16 @@ router.all('*', function (req, res, next) {
     req.target = AUTH_API_SERVER
     req.can = "public"
   }
+  
+  if (req.originalUrl.startsWith('/minio')) {
+    if (req.originalUrl.startsWith('/minio/webrpc')) {
+      req.target = 'http://minio:9000'
+      req.can = "public"
+    } else {
+      req.target = 'http://minio:9000'
+      req.can = "public"
+    }
+  }
 
   next()
 })

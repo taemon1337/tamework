@@ -17,6 +17,11 @@ services:
       - AUTH_API_PREFIX=/api/auth/v1
       - USER_INTERFACE_PREFIX=/ui
       - USER_INTERFACE_SERVER=http://userinterface:8080
+      - CAN_SCHEME=http
+      - CAN_SERVER=authserver
+      - CAN_PORT=8080
+      - CAN_PATH=/api/can/v1
+      - CAN_TOKEN=abcd1234
     depends_on:
       - cockroachdb
       - initdb
@@ -37,6 +42,7 @@ services:
       - GOOGLE_CLIENT_SECRET=$GOOGLE_CLIENT_SECRET
       - APP_REDIRECT_URL=http://localhost:8080/ui
       - NODE_PATH=/app/node_modules
+      - CAN_TOKEN=abcd1234
     depends_on:
       - cockroachdb
       - initdb
@@ -69,4 +75,31 @@ services:
       - COCKROACH_DATABASE=tamedb
     depends_on:
       - cockroachdb
+  registry:
+    build: ./registry
+    command: nodemon app.js
+    volumes:
+      - ./registry:/app
+      - ./common:/common
+    working_dir: /app
+    environment:
+      - NODE_PATH=/app/node_modules
+      - COCKROACH_HOST=cockroachdb
+      - COCKROACH_PORT=26257
+      - COCKROACH_USER=root
+      - COCKROACH_DATABASE=tamedb
+    depends_on:
+      - authserver
+      - proxy
+      - cockroachdb
+  minio:
+    image: minio/minio:latest
+    command: server /export
+    volumes:
+      - ./data/minio:/export
+    environment:
+      - MINIO_ACCESS_KEY=testKey
+      - MINIO_SECRET_KEY=testSecret123
+    ports:
+      - 9000:9000
 
