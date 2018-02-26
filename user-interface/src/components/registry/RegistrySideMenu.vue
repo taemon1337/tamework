@@ -1,7 +1,7 @@
 <template>
   <v-drawer :open="showDrawer" @open-change="onOpenChange">
     <aside slot="sidebar" class="menu">
-      <b-icon @click.native="onOpenChange" class="pull-right" pack="fa" icon="chevron-left"></b-icon>
+      <b-icon @click="onOpenChange" class="pull-right" pack="fa" icon="chevron-left"></b-icon>
       <p class="menu-label">
         General
       </p>
@@ -37,22 +37,22 @@
 
 <script>
 import VDrawer from 'v-drawer'
-import { GlobalTypes } from '@/store/mutation-types'
+import { RegistryTypes } from '@/store/mutation-types'
 import { mapGetters } from 'vuex'
 
 export default {
-  name: 'SideMenu',
+  name: 'RegistrySideMenu',
   data () {
     return {}
   },
   methods: {
     onOpenChange () {
-      this.$store.dispatch(GlobalTypes.showDrawer, !this.showDrawer)
+      this.$store.dispatch(RegistryTypes.showDrawer, !this.showDrawer)
     }
   },
   computed: {
     ...mapGetters({
-      showDrawer: GlobalTypes.showDrawer
+      showDrawer: RegistryTypes.showDrawer
     })
   },
   components: {

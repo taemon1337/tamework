@@ -77,7 +77,7 @@
 </template>
 
 <script>
-import { AccountTypes, GlobalTypes } from '@/store/mutation-types'
+import { AccountTypes, RegistryTypes } from '@/store/mutation-types'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -89,13 +89,13 @@ export default {
   },
   computed: {
     ...mapGetters({
-      showDrawer: GlobalTypes.showDrawer,
+      showDrawer: RegistryTypes.showDrawer,
       currentUser: AccountTypes.currentUser
     })
   },
   methods: {
     toggleDrawer () {
-      this.$store.dispatch(GlobalTypes.showDrawer, !this.showDrawer)
+      this.$store.dispatch(RegistryTypes.showDrawer, !this.showDrawer)
     },
     signout () {
       this.$store.dispatch(AccountTypes.signOut)

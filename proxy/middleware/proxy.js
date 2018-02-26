@@ -13,9 +13,14 @@ router.use('*', proxy({
   target: DEFAULT_TARGET_SERVER,
   ws: true,
   router: function (req) {
-    let target = req.target || DEFAULT_TARGET_SERVER
-    console.log('[ROUTER] Routing to ' + target)
-    return target
+    return req.target || DEFAULT_TARGET_SERVER
+  },
+  onProxyReq: function (proxyReq, req, res) {
+    // if (proxyReq.path.startsWith('/ui')) {
+    //   proxyReq.path = proxyReq.path.replace('/ui', '')
+    // }
+
+    console.log('[PROXY] ', req.originalUrl, ' --> ', req.target + proxyReq.path)
   }
 }))
 

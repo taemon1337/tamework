@@ -1,9 +1,9 @@
 <template>
   <div id="app">
     <div class="columns">
-      <SideMenu></SideMenu>
       <div class="column">
-        <Navbar></Navbar>
+        <navbar></navbar>
+        <registry-side-menu></registry-side-menu>
         <router-view/>
       </div>
     </div>
@@ -14,18 +14,18 @@
 import 'font-awesome/css/font-awesome.css'
 import 'bulma/css/bulma.css'
 import 'buefy/lib/buefy.css'
-import Navbar from '@/components/Navbar'
-import SideMenu from '@/components/SideMenu'
 import { AccountTypes } from '@/store/mutation-types'
+import Navbar from '@/components/navbar/Navbar'
+import RegistrySideMenu from '@/components/registry/RegistrySideMenu'
 
 export default {
   name: 'App',
-  components: {
-    Navbar,
-    SideMenu
-  },
   mounted () {
     this.$store.dispatch(AccountTypes.signIn)
+  },
+  components: {
+    Navbar,
+    RegistrySideMenu
   }
 }
 </script>
