@@ -10,7 +10,8 @@ export const AccountTypes = {
 }
 
 export const AppletTypes = {
-  all: 'Applet.all'
+  all: 'Applet.all',
+  groups: 'Applet.groups'
 }
 
 export const RegistryTypes = {

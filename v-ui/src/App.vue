@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-navigation-drawer persistent :mini-variant="miniVariant" :clipped="clipped" v-model="drawer" enable-resize-watcher fixed app>
+    <v-navigation-drawer persistent :mini-variant="miniVariant" :clipped="clipped" v-model="drawer" width="400" enable-resize-watcher fixed app>
       <applet-list></applet-list>
     </v-navigation-drawer>
     <v-toolbar app :clipped-left="clipped">
@@ -22,7 +22,7 @@
         </v-avatar>
       </v-btn>
       <v-btn v-else icon @click.stop="rightDrawer = !rightDrawer">
-        <v-icon>menu</v-icon>
+        <v-icon>chat</v-icon>
       </v-btn>
     </v-toolbar>
     <v-content>

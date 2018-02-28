@@ -4,7 +4,7 @@ import * as actions from './actions'
 import * as getters from './getters'
 import global from './modules/globals'
 import account from './modules/accounts'
-// import registry from '@/components/registry/store/registry'
+import applets from './modules/applets'
 
 Vue.use(Vuex)
 
@@ -15,8 +15,8 @@ export default new Vuex.Store({
   getters,
   modules: {
     global,
-    account
-    // registry
+    account,
+    applets
   },
   strict: debug
 })
