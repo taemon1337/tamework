@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HomePage from '@/components/HomePage'
+import AppPage from '@/pages/AppPage'
 import { AccountTypes } from '@/store/mutation-types'
 import store from '@/store'
 
@@ -10,13 +10,18 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'HomePage',
-      component: HomePage
+      name: 'AppPage',
+      component: AppPage
     },
     {
       path: '/sign-in',
       name: 'signin',
-      component: HomePage
+      component: AppPage
+    },
+    {
+      path: '/app/:name',
+      name: 'app',
+      component: AppPage
     },
     {
       name: 'set-token',

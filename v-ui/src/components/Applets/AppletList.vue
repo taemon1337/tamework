@@ -11,13 +11,20 @@
           </v-btn>
         </v-toolbar>
         <v-list>
+          <v-list-group prepend-icon='home' @click='load()'>
+            <v-list-tile slot="activator">
+              <v-list-tile-content>
+                <v-list-tile-title>Home</v-list-tile-title>
+              </v-list-tile-content>
+            </v-list-tile>
+          </v-list-group>
           <v-list-group v-for="group in groups" :key="group.name" :prepend-icon="group.icon" no-action>
             <v-list-tile slot="activator">
               <v-list-tile-content>
                 <v-list-tile-title>{{ group.title }}</v-list-tile-title>
               </v-list-tile-content>
             </v-list-tile>
-            <v-list-tile v-for="app in applets.filter(a => a.group === group.name)" :key="app.title" @click="" action class="white">
+            <v-list-tile v-for="app in applets.filter(a => a.group === group.name)" :key="app.title" @click="load(app.name)" action class="white">
               <v-list-tile-avatar>
                 <v-icon>{{ app.icon }}</v-icon>
               </v-list-tile-avatar>
@@ -65,6 +72,9 @@ export default {
   methods: {
     setActiveGroup (val) {
       console.log('set active ', val)
+    },
+    load (name) {
+      this.$store.dispatch(AppletTypes.currentApp, name)
     }
   },
   components: {

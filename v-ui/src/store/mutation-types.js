@@ -11,7 +11,8 @@ export const AccountTypes = {
 
 export const AppletTypes = {
   all: 'Applet.all',
-  groups: 'Applet.groups'
+  groups: 'Applet.groups',
+  currentApp: 'Applet.current'
 }
 
 export const RegistryTypes = {
