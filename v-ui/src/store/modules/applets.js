@@ -1,4 +1,5 @@
 import { AppletTypes } from '@/store/mutation-types'
+import api from '@/api'
 
 const state = {
   currentApp: 'HomePage',
@@ -42,20 +43,42 @@ const getters = {
 
 // actions
 const actions = {
+  [AppletTypes.all] ({ commit }, opts) {
+    api.applet.all(opts).then(records => {
+      commit(AppletTypes.all, records)
+    })
+  },
   [AppletTypes.currentApp] ({ commit }, name) {
     commit(AppletTypes.currentApp, name)
+  },
+  [AppletTypes.edit] ({ commit }, record) {
+    commit(AppletTypes.edit, record)
   }
 }
 
 // mutations must be synchronous
 const mutations = {
   [AppletTypes.all] (state, records) {
-    state.all = records
+    let keys = state.all.map(r => r.name)
+    let add = []
+    records.forEach(record => {
+      if (keys.indexOf(record.name) === -1) {
+        add.push(record)
+      }
+    })
+    state.all = state.all.concat(add)
   },
   [AppletTypes.currentApp] (state, name) {
-    let path = window.location.pathname + name ? '/#/app/' + name : ''
+    let path = name ? '#/app/' + name : window.location.pathname
     window.history.pushState({}, null, path)
     state.currentApp = name || 'HomePage'
+  },
+  [AppletTypes.edit] (state, record) {
+    state.all.forEach((a, i) => {
+      if (a.name === record.name) {
+        return state.all.splice(i, 1, Object.assign({}, a, record))
+      }
+    })
   }
 }
 

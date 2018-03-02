@@ -1,7 +1,9 @@
 import http from './http'
-import accountApi from './account'
+import accountApi from './accounts'
+import appletApi from './applets'
 
 export default {
   http: http,
-  account: accountApi
+  account: accountApi,
+  applet: appletApi
 }

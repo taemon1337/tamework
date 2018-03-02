@@ -18,3 +18,7 @@ export const AppletTypes = {
 export const RegistryTypes = {
   showDrawer: 'Registry.ShowDrawer'
 }
+
+export const NoticeTypes = {
+  snackbar: 'Notice.snackbar'
+}

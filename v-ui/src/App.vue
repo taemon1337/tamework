@@ -40,7 +40,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import { AccountTypes } from '@/store/mutation-types'
-import UserList from '@/components/UserList'
+import UserList from '@/components/Users/UserList'
 import AppletList from '@/components/Applets/AppletList'
 
 export default {
