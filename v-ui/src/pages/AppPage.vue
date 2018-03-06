@@ -15,23 +15,24 @@ import Registrator from '@/components/Applets/Registrator'
 export default {
   name: 'AppPage',
   data () {
-    return {}
+    return {
+      currentApp: 'HomePage'
+    }
   },
   computed: {
     ...mapGetters({
-      currentApp: AppletTypes.currentApp,
       groups: AppletTypes.groups
     })
-  },
-  methods: {
-    load (name) {
-      this.$store.dispatch(AppletTypes.load, name)
-    }
   },
   mounted () {
     if (this.$route.params.name) {
       console.log('Loading ' + this.$route.params.name + '...')
-      this.load(this.$route.params.name)
+      this.currentApp = this.$route.params.name
+    }
+  },
+  watch: {
+    '$route' (to, from) {
+      this.currentApp = to.params.name || 'HomePage'
     }
   },
   components: {

@@ -11,7 +11,7 @@
           </v-btn>
         </v-toolbar>
         <v-list>
-          <v-list-group prepend-icon='home' @click='load()'>
+          <v-list-group prepend-icon='home' @click='$router.push("/")'>
             <v-list-tile slot="activator">
               <v-list-tile-content>
                 <v-list-tile-title>Home</v-list-tile-title>
@@ -24,7 +24,7 @@
                 <v-list-tile-title>{{ group.title }}</v-list-tile-title>
               </v-list-tile-content>
             </v-list-tile>
-            <v-list-tile v-for="app in applets.filter(a => a.group === group.name)" :key="app.title" @click="load(app.name)" action class="white">
+            <v-list-tile v-for="app in applets.filter(a => a.group === group.name)" :key="app.title" @click="$router.push(app.name)" action class="white">
               <v-list-tile-avatar>
                 <v-icon>{{ app.icon }}</v-icon>
               </v-list-tile-avatar>
@@ -72,9 +72,6 @@ export default {
   methods: {
     setActiveGroup (val) {
       console.log('set active ', val)
-    },
-    load (name) {
-      this.$store.dispatch(AppletTypes.currentApp, name)
     }
   },
   components: {

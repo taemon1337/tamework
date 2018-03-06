@@ -68,11 +68,6 @@ const mutations = {
     })
     state.all = state.all.concat(add)
   },
-  [AppletTypes.currentApp] (state, name) {
-    let path = name ? '#/app/' + name : window.location.pathname
-    window.history.pushState({}, null, path)
-    state.currentApp = name || 'HomePage'
-  },
   [AppletTypes.edit] (state, record) {
     state.all.forEach((a, i) => {
       if (a.name === record.name) {

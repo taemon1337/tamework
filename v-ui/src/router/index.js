@@ -20,7 +20,7 @@ let router = new Router({
       component: SignInPage
     },
     {
-      path: '/app/:name',
+      path: '/:name',
       name: 'app',
       component: AppPage
     },

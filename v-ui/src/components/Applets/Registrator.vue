@@ -11,7 +11,7 @@
     <v-data-table :headers='headers' :items='applets' :search='search' class='elevation-1'>
       <template slot='items' slot-scope='props'>
         <td>
-          <a :title='"Open " + props.item.title' @click.stop.prevent='load(props.item.name)'>
+          <a :title='"Open " + props.item.title' @click.stop.prevent='$router.push(props.item.name)'>
             <v-icon large :color="randomColor()">open_in_browser</v-icon>
           </a>
         </td>
@@ -50,9 +50,6 @@ export default {
     randomColor: randomColor,
     reload () {
       this.$store.dispatch(AppletTypes.all)
-    },
-    load (name) {
-      this.$store.dispatch(AppletTypes.currentApp, name)
     }
   }
 }
