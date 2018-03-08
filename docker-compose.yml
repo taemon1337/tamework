@@ -22,6 +22,10 @@ services:
       - CAN_PORT=8080
       - CAN_PATH=/api/can/v1
       - CAN_TOKEN=abcd1234
+      - SERVICE_REGISTRY_PATH=/api/registry/v1
+      - SERVICE_REGISTRY_SCHEME=http
+      - SERVICE_REGISTRY_HOST=registry
+      - SERVICE_REGISTRY_PORT=8080
     depends_on:
       - cockroachdb
       - initdb
@@ -97,6 +101,7 @@ services:
       - ./common:/common
     working_dir: /app
     environment:
+      - PORT=8080
       - NODE_PATH=/app/node_modules
       - COCKROACH_HOST=cockroachdb
       - COCKROACH_PORT=26257

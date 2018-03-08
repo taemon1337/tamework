@@ -6,7 +6,7 @@ var parseData = function (resp) {
 
 var appletApi = {
   all: function (opts) {
-    return http.get('/applets', opts).then(parseData)
+    return http.get('/registry/v1/applets', opts).then(parseData)
   }
 }
 
