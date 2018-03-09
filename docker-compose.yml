@@ -13,19 +13,18 @@ services:
       - NODE_PATH=/app/node_modules
       - LOGIN_URL=/ui/#/sign-in
       - DEFAULT_TARGET_SERVER=http://v-ui:8080
-      - AUTH_API_SERVER=http://authserver:8080
-      - AUTH_API_PREFIX=/api/auth/v1
-      - USER_INTERFACE_PREFIX=/ui
-      - USER_INTERFACE_SERVER=http://v-ui:8080
+      #- AUTH_API_SERVER=http://authserver:8080
+      #- AUTH_API_PREFIX=/api/auth/v1
+      #- USER_INTERFACE_PREFIX=/ui
+      #- USER_INTERFACE_SERVER=http://v-ui:8080
       - CAN_SCHEME=http
       - CAN_SERVER=authserver
       - CAN_PORT=8080
       - CAN_PATH=/api/can/v1
       - CAN_TOKEN=abcd1234
-      - SERVICE_REGISTRY_PATH=/api/registry/v1
-      - SERVICE_REGISTRY_SCHEME=http
-      - SERVICE_REGISTRY_HOST=registry
-      - SERVICE_REGISTRY_PORT=8080
+      - SERVICE_REGISTRY=/api/registry/v1::http://registry:8080
+      - SERVICE_AUTH=/api/auth/v1::http://authserver:8080
+      - SERVICE_UI=/ui::http:v-ui:8080
     depends_on:
       - cockroachdb
       - initdb

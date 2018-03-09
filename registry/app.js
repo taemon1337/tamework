@@ -12,10 +12,6 @@ let express = require('express')
   , JwtCheckHandler = require('/common/middleware/jwtcheck')
 
 app.use('*', JwtCheckHandler)
-app.use('*', function (req, res, next) {
-  console.log('HERE: ', req.originalUrl)
-  next()
-})
 app.use('/api/registry/v1', require('./controllers'))
 
 if (tls_on) {

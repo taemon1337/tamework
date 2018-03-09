@@ -1,3 +1,34 @@
+let setPath = function (obj, path, val) {
+  let parts = path.split('/')
+  let ref = obj
+  parts.reduce((a, b) => a[b] = a[b] || {}, obj)
+  parts.forEach((key, i) => {
+    if (i === parts.length - 1) {
+      ref[key] = val
+    } else {
+      ref = ref[key]
+    }
+  })
+}
+
+let pathToSlashObject = function (path, val) {
+  let obj = {}
+  let ref = obj
+  let parts = path.split('/')
+  let key = parts.shift()
+  
+  while (key) {
+    if (parts.length) {
+      ref[key] = {}
+      ref = obj[key]
+    } else {
+      ref[key] = val
+    }
+    key = parts.shift()
+  }
+  return obj
+}
+
 /*
  routemap.map = {
    api: {
@@ -49,7 +80,7 @@ RouteMap.prototype = {
   },
   add: function (path, target) {
     console.log('ADDING ROUTE TO MAP:', path, target)
-    let m = this.map
+    let m = Object.assign({}, this.map)
     let parts = path.split('/')
     parts.forEach((key, i) => {
       key = key.toLowerCase()
@@ -61,35 +92,26 @@ RouteMap.prototype = {
       }
     })
   },
+  setPath: function (path, target) {
+    console.log('BEFORE: ', this.map)
+    setPath(this.map, path, target)
+    console.log('AFTER: ', this.map)
+  },
   addRoutesFromEnv: function (env) {
-    let services = {}
-    
     for (let key in process.env) {
       if (key.startsWith('SERVICE_')) {
         let val = process.env[key]
-        let parts = key.split('_').map(p => p.toLowerCase())
-        if (parts.length === 3) {
-          services[parts[1]] = services[parts[1]] || {}
-          services[parts[1]][parts[2]] = val
+        let parts = val.split('::')
+        if (parts.length === 2) {
+          this.setPath(parts[0], parts[1])
+          // this.add(parts[0], parts[1]) // /api/v1::http://v1host:8000
         } else {
-          console.warn('Invalid SERVICE environment variable: ', key, 'skipping.')
+          console.warn('Invalid SERVICE_NAME environment variable: should be SERVICE_NAME=/path/to/proxy::http://host:port, ', key)
         }
       }
     }
-    
-    for (let servicename in services) {
-      let s = services[servicename]
-      if (s.scheme && s.host && s.port && (s.path || s.pathmap)) {
-        if (s.pathmap) { // SERVICE_NAME_PATHMAP=/api/incoming/path:/api/outgoing/path
-          let path = s.pathmap.split(':')
-          this.add(path[0], s.scheme + '://' + s.host + ':' + s.port)
-        } else {
-          this.add(s.path, s.scheme + '://' + s.host + ':' + s.port)
-        }
-      }
-    }
-    
-    console.log('ROUTE MAP: ', JSON.stringify(this.map))
+
+    console.log('ROUTE MAP: ', JSON.stringify(this.map, null, 2))
   }
 }
 
