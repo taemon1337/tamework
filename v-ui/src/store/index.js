@@ -5,6 +5,8 @@ import * as getters from './getters'
 import global from './modules/globals'
 import account from './modules/accounts'
 import applets from './modules/applets'
+import groups from './modules/groups'
+import users from './modules/users'
 
 Vue.use(Vuex)
 
@@ -16,7 +18,9 @@ export default new Vuex.Store({
   modules: {
     global,
     account,
-    applets
+    applets,
+    users,
+    groups
   },
   strict: debug
 })

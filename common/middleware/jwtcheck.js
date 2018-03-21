@@ -15,7 +15,7 @@ router.use(function (req, res, next) {
     let token = req.headers.authorization.replace('Bearer ', '')
     client.get('/jwt/verify/' + token)
     .then(function (resp) {
-      console.log('[JWT-CHECK] User from auth server is ', resp.data)
+      console.log('[JWT-CHECK] User from auth server: ', resp.data.displayName)
       req.user = resp.data
       next()
     })

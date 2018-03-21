@@ -11,6 +11,7 @@ import { mapGetters } from 'vuex'
 import { AppletTypes } from '@/store/mutation-types'
 import HomePage from '@/pages/HomePage'
 import Registrator from '@/components/Applets/Registrator'
+import UserManager from '@/components/Users/UserManager'
 
 export default {
   name: 'AppPage',
@@ -37,7 +38,8 @@ export default {
   },
   components: {
     HomePage,
-    Registrator
+    Registrator,
+    UserManager
   }
 }
 </script>

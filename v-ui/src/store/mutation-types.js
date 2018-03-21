@@ -21,3 +21,11 @@ export const RegistryTypes = {
 export const NoticeTypes = {
   snackbar: 'Notice.snackbar'
 }
+
+export const UserTypes = {
+  all: 'User.all'
+}
+
+export const GroupTypes = {
+  all: 'Group.all'
+}

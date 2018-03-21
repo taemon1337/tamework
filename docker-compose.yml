@@ -23,6 +23,7 @@ services:
       - CAN_PATH=/api/can/v1
       - CAN_TOKEN=abcd1234
       - SERVICE_REGISTRY=/api/registry/v1::http://registry:8080
+      - SERVICE_RBAC=/api/rbac/v1::http://rbac:8080
       - SERVICE_AUTH=/api/auth/v1::http://authserver:8080
       - SERVICE_UI=/ui::http:v-ui:8080
     depends_on:
@@ -49,18 +50,6 @@ services:
     depends_on:
       - cockroachdb
       - initdb
-  user-interface:
-    build: ./user-interface
-    command: npm run dev
-    volumes:
-      - ./user-interface:/app
-    working_dir: /app
-    environment:
-      - PORT=8080
-      - API=/api
-    depends_on:
-      - authserver
-      - proxy
   v-ui:
     build: ./v-ui
     command: npm run dev
@@ -97,6 +86,24 @@ services:
     command: nodemon app.js
     volumes:
       - ./registry:/app
+      - ./common:/common
+    working_dir: /app
+    environment:
+      - PORT=8080
+      - NODE_PATH=/app/node_modules
+      - COCKROACH_HOST=cockroachdb
+      - COCKROACH_PORT=26257
+      - COCKROACH_USER=root
+      - COCKROACH_DATABASE=tamedb
+    depends_on:
+      - authserver
+      - proxy
+      - cockroachdb
+  rbac:
+    build: ./rbac-server
+    command: nodemon app.js
+    volumes:
+      - ./rbac-server:/app
       - ./common:/common
     working_dir: /app
     environment:

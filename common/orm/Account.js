@@ -41,7 +41,7 @@ Account.beforeCreate(function (account, options) {
   })
 })
 
-Account.sync({ force: true })
+Account.sync({})
 .then(function () {
   console.log('[ROACH] Initialized.')
 })

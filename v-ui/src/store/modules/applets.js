@@ -5,7 +5,7 @@ const state = {
   currentApp: 'HomePage',
   all: [
     { name: 'registrator', title: 'Applet Registrator', subtitle: 'Registry your applets here', icon: 'library_add', group: 'administrative' },
-    { name: 'usermanager', title: 'User Permissions', subtitle: 'Manage User RBAC policy', icon: 'group', group: 'administrative' },
+    { name: 'user-manager', title: 'User Permissions', subtitle: 'Manage User RBAC policy', icon: 'group', group: 'administrative' },
     { name: 'leegs', title: 'League Manager', subtitle: 'League and Event Registration Portal', icon: 'event_seat', group: 'social' },
     { name: 'resumer', title: 'Resumer', subtitle: 'Online Resume builder', icon: 'chrome_reader_mode', group: 'productivity' },
     { name: 'analystbook', title: 'Analyst Notebook', subtitle: 'Real time collborative analysis tool', icon: 'find_in_page', group: 'analysis' },

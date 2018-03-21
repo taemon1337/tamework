@@ -1,14 +1,13 @@
 let Sequelize = require('sequelize-cockroachdb')
   , roach = require('./roach')
 
-const Applet = roach.define('applets', {
+const Group = roach.define('applets', {
   id: { type: Sequelize.INTEGER, autoIncrement: true, primaryKey: true, allowNull: false },
   name: { type: Sequelize.STRING, unique: true, allowNull: false },
-  basePath: { type: Sequelize.STRING, unique: true, allowNull: false },
   description: { type: Sequelize.STRING, defaultValue: '' }
 })
 
-Applet.sync({})
+Group.sync({})
 .then(function () {
   console.log('[ROACH] Initialized.')
 })
@@ -16,4 +15,4 @@ Applet.sync({})
   console.warn('[ERROR] Cockroachdb initialization failed: ', err)
 })
 
-module.exports = Applet
+module.exports = Group

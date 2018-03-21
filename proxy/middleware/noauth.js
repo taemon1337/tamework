@@ -1,7 +1,7 @@
 let express = require('express')
   , router = express.Router()
   , proxy = require('http-proxy-middleware')
-  , USER_INTERFACE_SERVER = process.env.USER_INTERFACE_SERVER || 'http://userinterface:8080'
+  , USER_INTERFACE_SERVER = process.env.USER_INTERFACE_SERVER || 'http://v-ui:8080'
   , USER_INTERFACE_PREFIX = process.env.USER_INTERFACE_PREFIX || '/ui'
   , AUTH_API_SERVER = process.env.AUTH_API_SERVER || 'http://authserver:8080'
   , AUTH_API_PREFIX = process.env.AUTH_API_PREFIX || '/api/auth/v1'
